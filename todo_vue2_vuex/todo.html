@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>to do list</title>
+    <meta content="text/html" charset="utf-8" http-equiv="Content-Type" />
+    <link rel="stylesheet" href="main.css" />
+
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="inner_wrapper clearfix">
+            <div class="main" id="main_body">
+                <h1 class="title">ToDos</h1>
+                <input type="text" placeholder="what needs to be done?" name="input_item" class="input_text" v-model="message" v-on:keyup.13="createTodo" />
+                <div id="checkAll">
+                    <input type="checkbox" name="choose_all" v-model="allChecked" />
+                    <label class="with_cbx">Mark all as complete</label>
+                </div>
+                <div id="item_lists">
+                    <div class='user_choice_item' v-for="(todo,index) in todos"
+                     :key = "todo.content"
+                    @dblclick="changeToEdit(index)">
+                        <input type='checkbox' name='item_cbx' v-model="todo.checked" />
+                        <label class='with_cbx_item' v-if="todo.noEdit">{{todo.content}}</label>
+                        <input type="text" class="with_cbx_dbl" v-else
+                        		v-model="todo.content"
+                        		@keyup.enter="doneEdit(todo,index)"
+                        		@blur="doneEdit(todo,index)"
+                        />
+
+                        <span class='delete_bt'  v-on:click.stop="deleteTodo(index)" ></span>
+                    </div>
+                </div>
+            </div>
+            <div id="bottom" class="clearfix"  v-show="selectedNum">
+                <div class="float_left user_choices" >
+                    <!-- 				<input type="checkbox" value=""/> -->
+                    <label class="with_cbx" >
+                        {{selectedNum}} items selected
+                    </label>
+
+                </div>
+                <input class="delete_items  float_right" type="button" value="删除" v-on:click="deleteSelected"/>
+
+            </div>
+        </div>
+    </div>
+    <script data-main="scripts/todo_vue.js" src="scripts/require.js"></script>
+    <!--
+    <script type="text/javascript" src="scripts/vue.js"></script>
+    <script type="text/javascript" src="scripts/vuex.js"></script>
+    <script type="text/javascript" src="scripts/todo_vue.js"></script>
+    -->
+</body>
+
+</html>
